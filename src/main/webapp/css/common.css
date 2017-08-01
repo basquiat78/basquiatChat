@@ -1,0 +1,47 @@
+@charset "UTF-8";
+html, body, applet, object, iframe,
+fieldset, form, label, legend,
+audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+/*============================================
+common
+============================================*/
+body{
+	font-size:12px !important;
+	line-height: 1.4em;
+	font-family:'Malgun Gothic', arial, dotum, gulim !important;
+	color:#000;
+	padding:0; margin:0;
+}
+
+/*============================================
+Layout
+============================================*/
+.lay-wrap {width:auto;min-width:1160px;}
+/* 영역 구분 */
+.lay-container {margin:0 auto;}
+.lay-container-wrap {margin:0 20px;}
+.lay-snb {width:240px;height:100%;float:left;/* padding:0 19px;*/border-left:1px solid #e0e0e0;border-right:1px solid #e0e0e0;box-sizing:border-box;}
+.lay-snb .snb-content{padding:0 19px;}
+.lay-content {margin-left:240px;position:relative;height:100%;border-right:1px solid #e0e0e0;}
+.lay-content::after {content:'';display:block;clear:both;}
+/* Layout Static형
+ * .lay-static-content : 1단형
+ * .lay-static-content-type2 : 우측 고정형
+ * .lay-static-content-type3 : 좌측 고정형(사내전문가)
+*/
+.lay-static-content {padding-right:338px;}
+.lay-static-content::after {content:'';display:block;clear:both;}
+.lay-static-content .lay-col1 {position:relative;box-sizing:border-box;float:left;width:100%;height:100%;border-right:1px solid #e0e0e0;}
+.lay-static-content .lay-col2 {position:relative;left:338px;float:left;width:338px;height:100%;margin-left:-338px;box-sizing:border-box;}
+/* Contents영역 */
+.lay-contents-area {border-top:1px solid #e0e0e0;}
+.lay-static-content .lay-contents-area {border-top:none;}
+.lay-contents-area.lay-contents-margin {margin:0 20px;}
+.lay-contents-area.lay-contents-padding {padding:0 20px;}
+.lay-contents-area .info-description {padding:10px 0;}
+.lay-contents-area .info-description button {margin-bottom:5px;}
+.lay-contents-area .date-select {margin:0;padding-right:30px;}

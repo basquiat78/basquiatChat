@@ -1,0 +1,32 @@
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d [%thread] %-5level %logger{36}:%L - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILEOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>C:\Temp\logs\sns.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>C:\Temp\logs\sns.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d [%thread] %-5level %logger{36}:%L - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Application Loggers -->
+	<logger name="org" level="WARN"/>
+	<logger name="java" level="WARN" />
+	<logger name="org.springframework.scheduling.quartz" level="INFO"/>
+	<logger name="org.springframework.web" level="WARN"/>
+	<logger name="com.zaxxer.hikari" level="INFO"/>
+	<logger name="org.uengine.chat" level="DEBUG" />
+	<logger name="org.uengine.chat.websocket" level="WARN" />
+	
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>

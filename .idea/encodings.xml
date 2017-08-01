@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/TEST.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/common/ExceptionController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/common/batch/NoticeWebSocketJob.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/common/code/CommonCode.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/common/exception/ChatFileNotFoundException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/common/exception/ChatRunTimeException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/common/exception/ChatServiceException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/common/exception/NotAcceptableException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/common/exception/UnauthorizedException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/common/util/MessageUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/follower/mapper/FollowerMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/follower/service/FollowerService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/follower/vo/FollowerVo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/follower/vo/MentionVo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/follower/web/FollowerController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/login/web/LoginController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/login/web/MainController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/member/mapper/MemberMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/member/service/MemberService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/member/vo/MemberVo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/message/mapper/MessageMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/message/service/MessageService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/message/vo/MessageReadVo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/message/vo/MessageVo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/message/web/MessageController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/notice/mapper/NoticeMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/notice/service/NoticeService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/notice/vo/NoticeVo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/notice/web/NoticeController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/room/mapper/RoomMapper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/room/service/RoomService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/room/vo/RoomVo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/room/web/RoomController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/websocket/interceptor/WSHandshakeInterceptor.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/websocket/service/WsSessionStore.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/websocket/vo/WebSocketVo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/basquiat/chat/websocket/web/ChatWsHandler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/META-INF/message" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp" charset="UTF-8" />
+  </component>
+</project>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.basquiat.com.basquiat.chat.member.mapper.MemberMapper">
+	
+	<!-- member resultMap -->
+	<resultMap id="memberListResultMap" type="com.basquiat.com.basquiat.chat.member.vo.MemberVo">
+		<id property="memberId" 			column="MEMBER_ID"/>
+		<result property="userId" 			column="USER_ID"/>
+		<result property="userName" 		column="USER_NAME"/>   
+		<result property="encryptSalt"		column="ENCSALT"/>
+		<result property="password" 		column="PASSWORD"/>
+		<result property="isEnter" 			column="ISENTER"/>
+		<result property="isDeleted" 		column="ISDELETED"/>
+		<result property="regDttm" 		column="REGDTTM"/>
+		<collection property="roomList"	javaType="java.util.ArrayList" resultMap="roomListResultMap"/>
+	</resultMap>
+	
+	<!-- room list resultMap -->	
+	<resultMap id="roomListResultMap" type="com.basquiat.com.basquiat.chat.room.vo.RoomVo">
+		<id property="roomId" 					column="ROOM_ID"/>
+	    <result property="establisherId" 	   	column="ESTABLISHER_ID"/>
+	    <result property="establisherName"	column="ESTABLISHER_NAME"/>
+	    <result property="regDttm"				column="REGDTTM"/>
+	</resultMap>
+	
+	<!-- Member 추가 -->	
+	<insert id="insertMember" parameterType="com.basquiat.com.basquiat.chat.member.vo.MemberVo">
+		INSERT INTO	${defaultTablePrefix}MEMBER 
+		(
+		 USER_ID,		<!-- 사용자 아이디 -->	
+		 USER_NAME,	<!-- 사용자 이름 -->
+		 PASSWORD,   <!--  패스워드 -->
+		 ENCSALT,		<!-- encrpyt salt -->
+		 ISENTER,		<!-- 엔터키 사용 여부 -->
+		 ISDELETED,		<!-- 삭제 여부 -->
+		 REGDTTM		<!-- 생성 일시 -->
+	       ) 
+        
+        VALUES
+        
+        (
+         #{userId			, jdbcType=VARCHAR},	<!-- 사용자 아이디 -->	   
+         #{userName	, jdbcType=VARCHAR},   <!-- 사용자 이름 -->   
+         #{password		, jdbcType=VARCHAR},   <!-- 패스워드 -->      
+         #{encryptSalt	, jdbcType=VARCHAR},   <!-- encrypt salt -->   
+		 0,		                                    		<!-- 엔터키 사용 여부 -->  
+ 		 0,                                         		<!-- 삭제 여부 -->      
+ 		 SYSDATE   										<!-- 생성 일시 -->
+ 		 )	
+		<selectKey keyProperty="memberId" resultType="long" order="AFTER">
+        	SELECT last_insert_id()
+        </selectKey>
+    </insert>
+    
+   	<!-- memberId로 단건의 Member 조회 -->
+	<select id="selectMemberByMemberId" parameterType="long" resultMap="memberListResultMap">
+		SELECT 
+			M.MEMBER_ID,
+			M.USER_ID,
+			M.USER_NAME AS USER_NAME,
+			M.PASSWORD,      
+			M.ENCSALT,
+			M.ISENTER,		 
+			M.ISDELETED,		
+			M.REGDTTM,
+			CR.ROOM_ID,
+			CR.ESTABLISHER_ID,
+			CR.ESTABLISHER_NAME,
+			CR.REGDTTM
+		FROM ${defaultTablePrefix}MEMBER M
+			 LEFT OUTER JOIN ${defaultTablePrefix}CHATTING_FOLLOWER CF ON CF.FOLLOWER_ID = M.USER_ID
+      		 LEFT OUTER JOIN ${defaultTablePrefix}CHATTING_ROOM CR ON CR.ROOM_ID = CF.ROOM_ID
+		WHERE M.MEMBER_ID = #{memberId}
+	</select>
+	
+	<!-- userId로 단건의 Member 조회 -->
+	<select id="selectMemberByUserId" parameterType="string" resultMap="memberListResultMap">
+		SELECT 
+			M.MEMBER_ID,
+			M.USER_ID,
+			M.USER_NAME AS USER_NAME,
+			M.PASSWORD,      
+			M.ENCSALT,
+			M.ISENTER,		 
+			M.ISDELETED,		
+			M.REGDTTM,
+			CR.ROOM_ID,
+			CR.ESTABLISHER_ID,
+			CR.ESTABLISHER_NAME,
+			CR.REGDTTM
+		FROM ${defaultTablePrefix}MEMBER M
+			 LEFT OUTER JOIN ${defaultTablePrefix}CHATTING_FOLLOWER CF ON CF.FOLLOWER_ID = M.USER_ID
+      		 LEFT OUTER JOIN ${defaultTablePrefix}CHATTING_ROOM CR ON CR.ROOM_ID = CF.ROOM_ID
+		WHERE M.USER_ID = #{userId}
+	</select>
+</mapper>

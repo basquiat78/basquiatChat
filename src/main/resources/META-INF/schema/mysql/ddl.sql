@@ -1,0 +1,98 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- basquiat 데이터베이스 구조 내보내기
+DROP DATABASE IF EXISTS `basquiat`;
+CREATE DATABASE IF NOT EXISTS `basquiat` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `basquiat`;
+
+
+-- 테이블 basquiat.basquiat_member 구조 내보내기
+DROP TABLE IF EXISTS `basquiat_chat_member`;
+CREATE TABLE IF NOT EXISTS `basquiat_chat_member` (
+  `MEMBER_ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `USER_ID` varchar(150) NOT NULL COMMENT '사용자 ID',
+  `USER_NAME` varchar(150) DEFAULT NULL COMMENT '사용자 이름',
+  `PASSWORD` varchar(255) DEFAULT NULL,
+  `ENCSALT` varchar(255) DEFAULT NULL,
+  `ISDELETED` int(1) DEFAULT 0 COMMENT '삭제 여부',
+  `REGDTTM` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '사용자 등록일',
+  PRIMARY KEY (`MEMBER_ID`),
+  UNIQUE KEY `USER_ID` (`USER_ID`),
+  KEY `CHAT_MEMBER_IDX` (`USER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+-- 테이블 basquiat.basquiat_chatting_follower 구조 내보내기
+DROP TABLE IF EXISTS `basquiat_chat_follower`;
+CREATE TABLE IF NOT EXISTS `basquiat_chat_follower` (
+  `ROOM_ID` bigint(20) NOT NULL COMMENT '채팅방 ID',
+  `FOLLOWER_ID` varchar(150) NOT NULL COMMENT '참여자 ID',
+  `FOLLOWER_NAME` varchar(150) NOT NULL COMMENT '참여자 이름',
+  `REGDTTM` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '참여 일시',
+  PRIMARY KEY (`ROOM_ID`,`FOLLOWER_ID`),
+  UNIQUE KEY `CHATTING_FOLLOWER_IDX` (`ROOM_ID`,`FOLLOWER_ID`),
+  UNIQUE KEY `CHATTING_FOLLOWER_IDX01` (`FOLLOWER_ID`,`ROOM_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 테이블 basquiat.basquiat_chatting_message 구조 내보내기
+DROP TABLE IF EXISTS `basquiat_chat_message`;
+CREATE TABLE IF NOT EXISTS `basquiat_chat_message` (
+  `MESSAGE_ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `ROOM_ID` bigint(20) NOT NULL COMMENT '채팅방 ID',
+  `USER_ID` varchar(150) DEFAULT NULL COMMENT '사용자 아이디',
+  `USER_NAME` varchar(150) DEFAULT NULL COMMENT '사용자 이름',
+  `MESSAGE_TYPE` varchar(150) DEFAULT NULL COMMENT '메세지 타입',
+  `MESSAGE` text,
+  `WHISPER_ID` varchar(150) DEFAULT NULL COMMENT '귓속말 대상 아이디',
+  `WHISPER_NAME` varchar(150) DEFAULT NULL COMMENT '귓속말 대상 이름',
+  `REGDTTM` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '사용자 등록일',
+  PRIMARY KEY (`MESSAGE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 테이블 basquiat.basquiat_chatting_read 구조 내보내기
+DROP TABLE IF EXISTS `basquiat_chat_read`;
+CREATE TABLE IF NOT EXISTS `basquiat_chat_read` (
+  `ROOM_ID` bigint(20) NOT NULL COMMENT '채팅방 ID',
+  `USER_ID` varchar(150) NOT NULL COMMENT '사용자 아이디',
+  `MESSAGE_COUNT` bigint(20) NOT NULL DEFAULT '1' COMMENT '메세지 카운트',
+  `REGDTTM` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일시',
+  `MODDTTM` timestamp NOT NULL COMMENT '갱신일시',
+  PRIMARY KEY (`ROOM_ID`,`USER_ID`),
+  UNIQUE KEY `CHAT_READ_IDX` (`ROOM_ID`,`USER_ID`),
+  UNIQUE KEY `CHAT_READ_IDX01` (`USER_ID`,`ROOM_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 테이블 basquiat.basquiat_chatting_room 구조 내보내기
+DROP TABLE IF EXISTS `basquiat_chat_room`;
+CREATE TABLE IF NOT EXISTS `basquiat_chat_room` (
+  `ROOM_ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '채팅방 ID',
+  `ROOM_TITLE` varchar(255) NOT NULL COMMENT '채팅방 타이틀',
+  `ESTABLISHER_ID` varchar(150) DEFAULT NULL COMMENT '방 개설자 ID',
+  `ESTABLISHER_NAME` varchar(150) DEFAULT NULL COMMENT '방 개설자 이름',
+  `REGDTTM` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '개설 일자',
+  `LAST_MESSAGE` text DEFAULT NULL COMMENT '마지막 메세지',
+  `LASTDTTM` timestamp NOT NULL COMMENT '마지막 메세지 등록일자',
+  PRIMARY KEY (`ROOM_ID`),
+  UNIQUE KEY `USER_ID` (`ROOM_ID`),
+  KEY `CHATTING_ROOM_IDX` (`ROOM_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 테이블 basquiat.basquiat_notice 구조 내보내기
+DROP TABLE IF EXISTS `basquiat_chat_notice`;
+CREATE TABLE IF NOT EXISTS `basquiat_chat_notice` (
+  `NOTICE_ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `ITEM_TYPE` varchar(150) DEFAULT NULL COMMENT '아이템 타입',
+  `ITEM_ID` bigint(20) NOT NULL COMMENT '아이템 ID',
+  `ITEM_TITLE` varchar(255) NOT NULL COMMENT '아이템 타이틀',
+  `ITEM_CONTENT` text,
+  `TO_FOLLOWER_ID` varchar(150) DEFAULT NULL COMMENT '보낸 유저 ID',
+  `TO_FOLLOWER_NAME` varchar(150) DEFAULT NULL COMMENT '보낸 유저 명',
+  `FROM_FOLLOWER_ID` varchar(150) DEFAULT NULL COMMENT '받을 유저 ID',
+  `FROM_FOLLOWER_NAME` varchar(150) DEFAULT NULL COMMENT '받을 유저 명',
+  `ISREAD` int(1) DEFAULT 0 COMMENT '확인 여부',
+  `REGDTTM` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '알림 등록일',
+  PRIMARY KEY (`NOTICE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

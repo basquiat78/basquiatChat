@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+	
+	<context:component-scan base-package="com.basquiat.chat.common.batch" />
+	<context:component-scan base-package="com.basquiat.chat.websocket.web" />
+	<context:component-scan base-package="com.basquiat.chat.login.web" />
+	<context:component-scan base-package="com.basquiat.chat.room.web" />
+	<context:component-scan base-package="com.basquiat.chat.notice.web" />
+	<context:component-scan base-package="com.basquiat.chat.message.web" />
+	<context:component-scan base-package="com.basquiat.chat.follower.web" />
+	
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
+	
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+	  <property name="defaultContentType" value="application/json" />
+	  <property name="favorPathExtension" value="true" />
+	  
+	  <property name="mediaTypes">
+	    <map>
+		    <entry key="json"  value="application/json" />
+		    <entry key="xml"   value="application/xml" />
+		    <entry key="do"    value="text/html" />
+	    </map>
+	  </property>
+	  
+	  <property name="ignoreAcceptHeader" value="true" />
+	</bean>
+	
+	<!-- multipart -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	<mvc:resources location="/images/" mapping="/images/**"/>
+	<mvc:resources location="/css/"    mapping="/css/**"/>
+	<mvc:resources location="/js/"     mapping="/js/**"/>
+	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
+	
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="2"/>
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- websocket handler -->
+    <bean id="chatWsHandler" class="com.basquiat.chat.websocket.web.ChatWsHandler"/>
+
+	<!-- real time chat setting  -->
+	<websocket:handlers allowed-origins="*">
+        <websocket:mapping path="/ws/chat" handler="chatWsHandler"/>
+        <websocket:handshake-interceptors>
+            <bean class="com.basquiat.chat.websocket.interceptor.WSHandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
+    
+    <bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+	    <property name="maxSessionIdleTimeout" value="-1" />
+	</bean>
+	
+</beans>

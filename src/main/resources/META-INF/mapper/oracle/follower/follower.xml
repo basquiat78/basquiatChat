@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.basquiat.com.basquiat.chat.follower.mapper.FollowerMapper">
+	
+	<!-- message resultMap -->
+	<resultMap id="mentionsFollowerListResultMap" type="com.basquiat.com.basquiat.chat.follower.vo.MentionVo">
+		<result property="mentionId" 			column="USER_ID"/>
+		<result property="mentionName"		column="USER_NAME"/>
+	</resultMap>
+	
+	<!-- follower 추가 -->	
+	<insert id="insertFollower" parameterType="com.basquiat.com.basquiat.chat.follower.vo.FollowerVo">
+		INSERT INTO	${defaultTablePrefix}CHATTING_FOLLOWER 
+			(
+			 ROOM_ID,				<!-- 방 아이디 -->	
+			 FOLLOWER_ID,		<!-- 참여자 아이디 -->
+			 FOLLOWER_NAME,	<!-- 참여자 이름 -->
+			 REGDTTM				<!-- 참여 일시 -->
+	        ) 
+        
+        	VALUES
+        
+	        (
+	         #{roomId,			jdbcType=BIGINT},	   
+	         #{followerId,		jdbcType=VARCHAR},      
+	         #{followerName,	jdbcType=VARCHAR},
+	         SYSDATE
+	 		 )	
+    </insert>
+    
+    <!-- mention follower list -->
+	<select id="selectMentionFollowerList" parameterType="string" resultMap="mentionsFollowerListResultMap">
+		SELECT 
+				USER_ID,	    
+				USER_NAME	    	 	 
+			FROM ${defaultTablePrefix}MEMBER
+		WHERE 1 = 1
+		   AND USER_NAME LIKE CONCAT(#{term}, '%')
+		ORDER BY USER_NAME
+	</select>
+</mapper>
